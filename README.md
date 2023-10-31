@@ -1,15 +1,20 @@
+--- 
 # BrainTumor_CNN_Model
 ## About
+This project builds and compiles a Convolutional Neural Network model to predict and classify the different types of brain tumors from brain MRI image sets. This project uses grid search to test different hyperparameters to find the optimal setting to maximize the performance of the model. 
+
+The project can be accessed on Google Colab (link below). The README provides an explanation of the set up, the functions used, the models created, the hyperparameters that were tested, and the model performance comparisons. 
+
+* [Google Colab Notebook](https://colab.research.google.com/github/jlee92603/BrainTumor_CNN_Model/blob/main/BrainTumor_CNN_Model.ipynb)
+
 ---
 ## Table of Contents
+
 ---
 ## Introduction to CNN
 &nbsp;&nbsp;&nbsp;
-# explain metrices used (recall), validation data
----
-## 
-* [Google Colab](https://colab.research.google.com/github/jlee92603/BrainTumor_CNN_Model/blob/main/BrainTumor_CNN_Model.ipynb)
 
+---
 ## Getting Started
 This convolutional neural network is coded with the Python's Tensorflow Keras package on Google Colab. 
 
@@ -119,9 +124,11 @@ for ct, ele in enumerate(image_files[5000:5003]):
 print(tabulate(data, header, tablefmt="grid"))
 ```
 A couple of the images are displayed with their classification label: 
+
 <img width="345" alt="Screen Shot 2023-10-30 at 11 38 43 PM" src="https://github.com/jlee92603/BrainTumor_CNN_Model/assets/70551445/8bfa30bb-34cc-453a-a82c-4ea44028f86a">
 
 Additionally, a table is created to display a couple of the image file names and their type of tumor:
+
 <img width="245" alt="Screen Shot 2023-10-30 at 11 39 28 PM" src="https://github.com/jlee92603/BrainTumor_CNN_Model/assets/70551445/0a99591d-32cb-40c8-a5f9-831a639cb507">
 
 ### Splitting and Concatenating Data
@@ -205,18 +212,18 @@ def createModel(filters=[16,32,64]):
   return model
 ```
 ### Compiling Model
-When compiling the model, the metrices Recall is used. Recall metrics focuses on capturing as many true positives and are usually used when the false negatives are costly. In this case, true positives are the result of the model predicting the existence of brain tumor when the patient actually has brain tumor, while false negatives are prediction that there is no brain tumor when the patient actually has brain tumor. The false negatives, in this scenario, are costly because predicting that the patient does not have tumor when they actuall do lets the tumor go unnoticed and untreated. Hence, we want to maximize the Recall value.
+When compiling the model, the metrices Recall is used. Recall metrics focuses on capturing as many true positives and are usually used when the false negatives are costly. In this case, true positives are the result of the model predicting the existence of brain tumor when the patient actually has brain tumor, while false negatives are prediction that there is no brain tumor when the patient actually has brain tumor. The false negatives, in this scenario, are costly because predicting that the patient does not have tumor when they actuall do lets the tumor go unnoticed and untreated. Hence, we want to maximize the Recall value. 
+
+Another hyperparaeter used consistently for all the models is the loss function. The loss function 'categorial crossentropy' is used. 
 ```
 # compile CNN model
-def compileModel(model, filepath, optimizer=Adam(learning_rate=0.001), loss='categorical_crossentropy',
-                 metrics=[keras.metrics.Recall()], shuffle=False):
+def compileModel(model, filepath, optimizer=Adam(learning_rate=0.001), loss='categorical_crossentropy', metrics=[keras.metrics.Recall()], shuffle=False):
 
   # loss function
   model.compile(optimizer=optimizer,loss=loss,metrics=metrics)
 
   # model check point
-  checkpoint = ModelCheckpoint(filepath=filepath, monitor='val_recall', verbose=1,
-                              save_best_only=True, mode='max')
+  checkpoint = ModelCheckpoint(filepath=filepath, monitor='val_recall', verbose=1, save_best_only=True, mode='max')
 
   # fit model on training set
   return model.fit(x=train_gen, epochs=10, callbacks=checkpoint, verbose=1, validation_data=valid_gen, validation_steps=None, shuffle=shuffle)
@@ -360,9 +367,18 @@ Grid search is used to find the optimal hyperparameters that create the model wi
 The validation data recall values for each cohort are as follows: 
 <img width="564" alt="Screen Shot 2023-10-31 at 12 07 10 AM" src="https://github.com/jlee92603/BrainTumor_CNN_Model/assets/70551445/547e6eaa-9767-44fd-bf89-232e85b0aa44">
 
-
-
+The Loss/Recall Graphs and Confusion Matrices for each cohort are as follows: 
+<img width="587" alt="Screen Shot 2023-10-31 at 12 13 09 AM" src="https://github.com/jlee92603/BrainTumor_CNN_Model/assets/70551445/a2d7c548-6ccb-4a3b-ab9d-ffd7f33ed9eb">
+<img width="587" alt="Screen Shot 2023-10-31 at 12 12 57 AM" src="https://github.com/jlee92603/BrainTumor_CNN_Model/assets/70551445/e1854220-e6d5-4653-ba90-dfd0b9fc2c96">
+<img width="587" alt="Screen Shot 2023-10-31 at 12 13 24 AM" src="https://github.com/jlee92603/BrainTumor_CNN_Model/assets/70551445/20cc783d-fdad-4f5c-bf0e-7089fe672a1d">
+<img width="587" alt="Screen Shot 2023-10-31 at 12 13 39 AM" src="https://github.com/jlee92603/BrainTumor_CNN_Model/assets/70551445/0d0feb60-913b-48e5-adf1-f3952ef9b70c">
+<img width="587" alt="Screen Shot 2023-10-31 at 12 13 48 AM" src="https://github.com/jlee92603/BrainTumor_CNN_Model/assets/70551445/2af5eadd-e5dd-4434-8924-f68cb4f608d0">
+<img width="587" alt="Screen Shot 2023-10-31 at 12 13 57 AM" src="https://github.com/jlee92603/BrainTumor_CNN_Model/assets/70551445/62e3519d-d616-44b9-9817-d0b6b52f50e4">
+<img width="587" alt="Screen Shot 2023-10-31 at 12 14 10 AM" src="https://github.com/jlee92603/BrainTumor_CNN_Model/assets/70551445/b1fafdf3-70a4-43fa-8e4f-53a149cfb070">
 
 ## Conclusion
+Excluding the EfficientNetB3 model architecture that performed significantly better than the other models, Cohorts C, H, K, and O performed well with the best validation recall value greater than 0.94. These models used either the Adam or Adamax optimizers and had slower learning rates. 
+
+Other observations are that, the models had much better performance on the training data and lower recall values with the validation data, indicating that there may have been some overfitting. Reducing overfitting was attempted by shuffling the data between every epoch. Other ways overfitting can be reduced is by regularization, data augmentation, increasing the dataset size, dropouts, early stopping, and cross validation. 
 
 ---
