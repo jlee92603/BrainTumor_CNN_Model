@@ -9,6 +9,23 @@ The project can be accessed on Google Colab (link below). The README provides an
 
 ---
 ## Table of Contents
+- [Introduction to CNN](#Introduction-to-CNN)
+- [Getting Started](#Getting-Started)
+    - [Installations](#Installations)
+    - [Downloading Dataset](#Downloading-Dataset)
+    - [Connecting Drive and GPU](#Connecting-Drive-and-GPU)
+    - [Importing Libraries](#Importing-Libraries)
+    - [Accessing and Reading Image Data](#Accessing-and-Reading-Image-Data)
+    - [Splitting and Concatenating Data](#Splitting-and-Concatenating-Data)
+- [CNN Modeling](#CNN-Modeling)
+    - [Creating Model](#Creating-Model)
+    - [Compiling Model](#Compiling-Model)
+    - [Evaluating the Performance](#Evaluating-the-Performance)
+    - [Clearing the Curent Model](#Clear-Current-Model)
+    - [Gather Results from Multiple Models](#Gather-Results-from-Multiple-Models)
+- [Types of Hyperparameters Used](#Types-of-Hyperparameters-Used)
+- [Model Results and Comparison](#Model-Results-and-Comparison)
+- [Conclusion](#Conclusion)
 
 ---
 ## Introduction to CNN
@@ -287,8 +304,9 @@ def createConfusionMatrix(y_pred, saveAs=False, filepath=filepath, test_gen=test
   plt.show()
 ```
 ### Clear Current Model
-# CLEAR MODEL SESSION
+Use the keras backend clear_session() function to clear the model. 
 ```
+# CLEAR MODEL SESSION
 keras.backend.clear_session()
 ```
 ### Gather Results from Multiple Models
