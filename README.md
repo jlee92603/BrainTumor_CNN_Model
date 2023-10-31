@@ -29,7 +29,7 @@ The project can be accessed on Google Colab (link below). The README provides an
 
 ---
 ## Introduction to CNN
-&nbsp;&nbsp;&nbsp;
+Convolutional neural network is a deep learning algorithm comprised of an input layer, node layers, one or more hidden layers, and an output layer. Each node is connected to another and is assigned a weight and threshold. Data is sent to the next layer if the output of the node is above the specified threshold value. Convolutional neural networks are often used for classification and computer vision tasks. They are greate for image classification and object recognition. Hence, a convolutional neural network algorithm is used in this project to create a deep learning model that classifies the images based on the types of brain tumors. 
 
 ---
 ## Getting Started
@@ -51,7 +51,24 @@ The brain tumor dataset is acquired from Kaggle [Kaggle Brain Tumor Dataset](htt
 This dataset contains a set of testing data files and training data files. 
 
 ### Connecting Drive and GPU
-The dataset is downloaded and uploaded on to Google Drive, which is connected to the Colab notebook. Additionally, Google Colab's T4 GPU is connected for faster model fitting. 
+The dataset is downloaded and uploaded on to Google Drive, which is connected to the Colab notebook. Additionally, Google Colab's T4 GPU is connected for faster model fitting. Google Colab's GPU can be connected by changing runtime type. 
+```
+# Mount Google Drive
+from google.colab import drive
+drive.mount('/content/drive')
+from google.oauth2.credentials import Credentials
+from googleapiclient.discovery import build
+from googleapiclient.errors import HttpError
+import io
+from googleapiclient.http import MediaIoBaseUpload
+
+# find GPU
+from tensorflow import test
+device_name = test.gpu_device_name()
+if device_name != '/device:GPU:0':
+  raise SystemError('GPU device not found')
+print('Found GPU at: {}'.format(device_name))
+```
 
 ### Importing Libraries
 The following packages are imported: 
@@ -198,6 +215,7 @@ A convolutional layer has many different parameter inputs:
 Another relevant term is epoch, which is the number of times the learning algorithm will work through the entire training dataset. In this model, callbacks is used during the model fitting process to save the model of the epoch with the best validation data recall value.
 
 ### Creating Model
+Create the convolutional neural network model by adding different layers. 
 ```
 # create the convolutional neural network model
 def createModel(filters=[16,32,64]):
