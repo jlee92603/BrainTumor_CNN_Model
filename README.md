@@ -1,9 +1,9 @@
 --- 
 # BrainTumor_CNN_Model
 ## About
-This project builds and compiles a Convolutional Neural Network model to predict and classify the different types of brain tumors from brain MRI image sets. This project tests different hyperparameters to find the set of parameters that maximize the performance of the model. 
+This project builds and compiles a Convolutional Neural Network model to predict and classify the different types of brain tumors from brain MRI image sets. Different hyperparameters are tested to find the set of parameters that maximize the performance of the model. 
 
-The project can be accessed on Google Colab (link below). The README provides an explanation of the set up, the functions used, the models created, the hyperparameters that were tested, and the model performance comparisons. 
+The code and details can be accessed on the Google Colab Notebook (link below). The README provides an explanation of the set up, the functions used, the models created, the hyperparameters that were tested, and the model performance comparisons. 
 
 * [Google Colab Notebook](https://colab.research.google.com/github/jlee92603/BrainTumor_CNN_Model/blob/main/BrainTumor_CNN_Model.ipynb)
 
