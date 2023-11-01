@@ -29,7 +29,7 @@ The code and details can be accessed on the Google Colab Notebook (link below). 
 
 ---
 ## Introduction to CNN
-Convolutional neural network is a deep learning algorithm comprised of an input layer, node layers, one or more hidden layers, and an output layer. Each node is connected to another and is assigned a weight and threshold. Data is sent to the next layer if the output of the node is above the specified threshold value. Convolutional neural networks are often used for classification and computer vision tasks. They are greate for image classification and object recognition. Hence, a convolutional neural network algorithm is used in this project to create a deep learning model that classifies the images based on the types of brain tumors. 
+Convolutional neural network is a deep learning algorithm comprised of an input layer, node layers, one or more hidden layers, and an output layer. Each node is connected to another and is assigned a weight and threshold. Data is sent to the next layer if the output of the node is above the specified threshold value. Convolutional neural networks are often used for classification and computer vision tasks. They are great for image classification and object recognition. Hence, a convolutional neural network algorithm is used in this project to create a deep learning model that classifies the images based on the types of brain tumors. 
 
 ---
 ## Getting Started
