@@ -13,6 +13,7 @@ The purpose of this project is to test different hyperparameters in a simple con
 The model is created with repeating Conv2D and MaxPooling2D layers with flattening and dense layers at the end. A kernel size of 2 activation function ReLU is used, and softmax is used in the last layer of the network. The model is compiled with the loss function as categorical crossentropy. Different hyperparameters, such as the type of optimizer and the learning rate, are used when compiling the model. Additionally, a simple Luong attention layer is added for one of the models to test whether the presence of an attention layer effects the performance of the model. 
 
 To summarize the results, the validation data recall values for each cohort that tested different hyperparameters are as follows: 
+
 <img width="564" alt="Screen Shot 2023-10-31 at 12 07 10 AM" src="https://github.com/jlee92603/BrainTumor_CNN_Model/assets/70551445/547e6eaa-9767-44fd-bf89-232e85b0aa44">
 
 Excluding the EfficientNetB3 model architecture that performed significantly better than the other models, Cohorts C, H, K, and O performed well with the best validation recall value greater than 0.94. These models used either the Adam or Adamax optimizers and had slower learning rates. 
@@ -411,9 +412,11 @@ Grid search is used to find the optimal hyperparameters that create the model wi
 
 ## Model Results and Comparison
 The validation data recall values for each cohort are as follows: 
+
 <img width="564" alt="Screen Shot 2023-10-31 at 12 07 10 AM" src="https://github.com/jlee92603/BrainTumor_CNN_Model/assets/70551445/547e6eaa-9767-44fd-bf89-232e85b0aa44">
 
 The Loss/Recall Graphs and Confusion Matrices for each cohort are as follows: 
+
 <img width="587" alt="Screen Shot 2023-10-31 at 12 13 09 AM" src="https://github.com/jlee92603/BrainTumor_CNN_Model/assets/70551445/a2d7c548-6ccb-4a3b-ab9d-ffd7f33ed9eb">
 <img width="587" alt="Screen Shot 2023-10-31 at 12 12 57 AM" src="https://github.com/jlee92603/BrainTumor_CNN_Model/assets/70551445/e1854220-e6d5-4653-ba90-dfd0b9fc2c96">
 <img width="587" alt="Screen Shot 2023-10-31 at 12 13 24 AM" src="https://github.com/jlee92603/BrainTumor_CNN_Model/assets/70551445/20cc783d-fdad-4f5c-bf0e-7089fe672a1d">
