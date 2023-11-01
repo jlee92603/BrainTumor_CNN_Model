@@ -7,6 +7,14 @@ The code and details can be accessed on the Google Colab Notebook (link below). 
 
 * [Google Colab Notebook](https://colab.research.google.com/github/jlee92603/BrainTumor_CNN_Model/blob/main/BrainTumor_CNN_Model.ipynb)
 
+## Introduction
+The purpose of this project is to test different hyperparameters in a simple convolutional neural network model to find which hyperparameters give the best recall value, or in other words, maximizes the true positive and minimizes the false negatives. The model learns from the labeled training data image files. The fitted model is then tested against the training data, where the model classifies each image as a type of tumor (glioma, meningioma, pituitary) or as no tumor. 
+
+To summarize the results, the validation data recall values for each cohort that tested different hyperparameters are as follows: 
+<img width="564" alt="Screen Shot 2023-10-31 at 12 07 10 AM" src="https://github.com/jlee92603/BrainTumor_CNN_Model/assets/70551445/547e6eaa-9767-44fd-bf89-232e85b0aa44">
+
+Excluding the EfficientNetB3 model architecture that performed significantly better than the other models, Cohorts C, H, K, and O performed well with the best validation recall value greater than 0.94. These models used either the Adam or Adamax optimizers and had slower learning rates. 
+
 ---
 ## Table of Contents
 - [Introduction to CNN](#Introduction-to-CNN)
