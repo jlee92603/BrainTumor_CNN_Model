@@ -428,6 +428,6 @@ The Loss/Recall Graphs and Confusion Matrices for each cohort are as follows:
 ## Conclusion
 Excluding the EfficientNetB3 model architecture that performed significantly better than the other models, Cohorts C, H, K, and O performed well with the best validation recall value greater than 0.94. These models used either the Adam or Adamax optimizers and had slower learning rates. 
 
-Other observations are that, the models had much better performance on the training data and lower recall values with the validation data, indicating that there may have been some overfitting. Reducing overfitting was attempted by shuffling the data between every epoch. Other ways overfitting can be reduced is by regularization, data augmentation, increasing the dataset size, dropouts, early stopping, and cross validation. 
+Other observations are that, the models had much better performance on the training data and lower recall values with the validation data, indicating that there may have been some overfitting. Reducing overfitting was attempted by shuffling the data between every epoch. Other ways overfitting can be reduced is by regularization, data augmentation, increasing the dataset size, dropouts, early stopping, and cross validation. Additionally, adding more filters and layers to the network did not result in a significant change in performance, indicating that the model may have been overparameterized.
 
 ---
