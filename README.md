@@ -8,7 +8,7 @@ The code and details can be accessed on the Google Colab Notebook (link below). 
 * [Google Colab Notebook](https://colab.research.google.com/github/jlee92603/BrainTumor_CNN_Model/blob/main/BrainTumor_CNN_Model.ipynb)
 
 ## Introduction
-The purpose of this project is to test different hyperparameters in a simple convolutional neural network model to find which hyperparameters give the best recall value, or in other words, maximizes the true positive and minimizes the false negatives. The model learns from the labeled training data image files. The fitted model is then tested against the training data, where the model classifies each image as a type of tumor (glioma, meningioma, pituitary) or as no tumor. 
+The purpose of this project is to test different hyperparameters in a simple convolutional neural network model to find which hyperparameters give the best recall value, or in other words, maximizes the true positive and minimizes the false negatives. The model learns from the labeled training data image files. The fitted model is then tested against the testing data, where the model classifies each image as a type of tumor (glioma, meningioma, pituitary) or as no tumor. 
  
 The model is created with repeating Conv2D and MaxPooling2D layers with flattening and dense layers at the end. A kernel size of 2 activation function ReLU is used, and softmax is used in the last layer of the network. The model is compiled with the loss function as categorical crossentropy. Different hyperparameters, such as the type of optimizer and the learning rate, are used when compiling the model. Additionally, a simple Luong attention layer is added for one of the models to test whether the presence of an attention layer effects the performance of the model. 
 
