@@ -18,6 +18,8 @@ To summarize the results, the validation data recall values for each cohort that
 
 Excluding the EfficientNetB3 model architecture that performed significantly better than the other models, Cohorts C, H, K, and O performed well with the best validation recall value greater than 0.94. These models used either the Adam or Adamax optimizers and had slower learning rates. 
 
+Deeper evaluation of results is in the [Model Results and Comparison](#Model-Results-and-Comparison) section, where there are loss and recall graphs plotted as well as a confusion matrix of the predictions for the testing image data set for each cohort. 
+
 ---
 ## Table of Contents
 - [Introduction to CNN](#Introduction-to-CNN)
