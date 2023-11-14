@@ -3,9 +3,9 @@
 ## About
 This project builds and compiles a Convolutional Neural Network model to predict and classify the different types of brain tumors from brain MRI image sets. Different hyperparameters are tested to find the set of parameters that maximize the performance of the model. 
 
-The code and details can be accessed on the Google Colab Notebook (link below). The README provides an explanation of the set up, the functions used, the models created, the hyperparameters that were tested, and the model performance comparisons. 
+The tutorial code and details can be accessed on the Google Colab Notebook (link below). The README provides an explanation of the set up, the functions used, the models created, the hyperparameters that were tested, and the model performance comparisons. 
 
-* [Google Colab Notebook](https://colab.research.google.com/github/jlee92603/BrainTumor_CNN_Model/blob/main/BrainTumor_CNN_Model.ipynb)
+* [Google Colab Tutorial Notebook](https://colab.research.google.com/github/jlee92603/BrainTumor_CNN_Model/blob/main/BrainTumor_CNN_Model.ipynb)
 
 ## Introduction
 The purpose of this project is to test different hyperparameters in a simple convolutional neural network model to find which hyperparameters give the best recall value, or in other words, maximizes the true positive and minimizes the false negatives. The model learns from the labeled training data image files. The fitted model is then tested against the testing data, where the model classifies each image as a type of tumor (glioma, meningioma, pituitary) or as no tumor. 
@@ -14,7 +14,7 @@ The model is created with repeating Conv2D and MaxPooling2D layers with flatteni
 
 To summarize the results, the validation data recall values for each cohort that tested different hyperparameters are as follows: 
 
-<img width="564" alt="Screen Shot 2023-10-31 at 12 07 10 AM" src="https://github.com/jlee92603/BrainTumor_CNN_Model/assets/70551445/547e6eaa-9767-44fd-bf89-232e85b0aa44">
+<img width="700" alt="Screen Shot 2023-10-31 at 12 07 10 AM" src="https://github.com/jlee92603/BrainTumor_CNN_Model/assets/70551445/547e6eaa-9767-44fd-bf89-232e85b0aa44">
 
 Excluding the EfficientNetB3 model architecture that performed significantly better than the other models, Cohorts C, H, K, and O performed well with the best validation recall value greater than 0.94. These models used either the Adam or Adamax optimizers and had slower learning rates. 
 
@@ -34,7 +34,7 @@ Excluding the EfficientNetB3 model architecture that performed significantly bet
     - [Evaluating the Performance](#Evaluating-the-Performance)
     - [Clearing the Curent Model](#Clear-Current-Model)
     - [Gather Results from Multiple Models](#Gather-Results-from-Multiple-Models)
-- [Types of Hyperparameters Used](#Types-of-Hyperparameters-Used)
+- [Testing Different Hyperparameters](#Testing-Different-Hyperparameters)
 - [Model Results and Comparison](#Model-Results-and-Comparison)
 - [Conclusion](#Conclusion)
 
@@ -138,14 +138,17 @@ def load_images_files_from_folder(directory):
     return image_files, file_labels
 
 # access images from multiple folders
+# image_files is file name of each training data image, file_labels is the label/tumor type for that training data image
+# test_image_files is the file name of each testing data image, test_file_labels is the label/tumor type for that testing data image
 image_files, file_labels = load_images_files_from_folder(training_data_path)
 test_image_files, test_file_labels = load_images_files_from_folder(testing_data_path)
 
-# display couple images
+# display a couple images
 fig, ax = plt.subplots(3,4)
+factor = 430 # arbitrary number to display couple images from each type image: tumor/noTumor
 for x in range(12):
-  img = cv2.imread(image_files[x*430],1)
-  ax[int(x/4),int(x%4)].set_title(os.path.basename(os.path.dirname(image_files[x*430])))
+  img = cv2.imread(image_files[x*factor],1)
+  ax[int(x/4),int(x%4)].set_title(os.path.basename(os.path.dirname(image_files[x*factor])))
   ax[int(x/4),int(x%4)].imshow(img)
   ax[int(x/4),int(x%4)].axis("off")
 plt.show()
@@ -154,15 +157,19 @@ plt.show()
 header = ["#", "image file name", "tumor type"]
 data = []
 
+# a couple glioma tumor images data set
 for ct, ele in enumerate(image_files[0:3]):
   data.append([ct, os.path.basename(ele), os.path.basename(os.path.dirname(ele))])
 
+# a couple meningioma tumor images data set
 for ct, ele in enumerate(image_files[2000:2003]):
   data.append([ct+3, os.path.basename(ele), os.path.basename(os.path.dirname(ele))])
 
+# a couple no tumor image data set
 for ct, ele in enumerate(image_files[3000:3003]):
   data.append([ct+6, os.path.basename(ele), os.path.basename(os.path.dirname(ele))])
 
+# a couple pituitary tumor image data set
 for ct, ele in enumerate(image_files[5000:5003]):
   data.append([ct+9, os.path.basename(ele), os.path.basename(os.path.dirname(ele))])
 
@@ -170,19 +177,23 @@ print(tabulate(data, header, tablefmt="grid"))
 ```
 A couple of the images are displayed with their classification label: 
 
-<img width="345" alt="Screen Shot 2023-10-30 at 11 38 43 PM" src="https://github.com/jlee92603/BrainTumor_CNN_Model/assets/70551445/8bfa30bb-34cc-453a-a82c-4ea44028f86a">
+<img width="550" alt="Screen Shot 2023-10-30 at 11 38 43 PM" src="https://github.com/jlee92603/BrainTumor_CNN_Model/assets/70551445/8bfa30bb-34cc-453a-a82c-4ea44028f86a">
 
 Additionally, a table is created to display a couple of the image file names and their type of tumor:
 
-<img width="245" alt="Screen Shot 2023-10-30 at 11 39 28 PM" src="https://github.com/jlee92603/BrainTumor_CNN_Model/assets/70551445/0a99591d-32cb-40c8-a5f9-831a639cb507">
+<img width="450" alt="Screen Shot 2023-10-30 at 11 39 28 PM" src="https://github.com/jlee92603/BrainTumor_CNN_Model/assets/70551445/0a99591d-32cb-40c8-a5f9-831a639cb507">
 
 ### Splitting and Concatenating Data
-The data is concatenated as a data frame. Additionally, training data set is split into validation data and training data. Then, ImageDataGenerator is used to ensure that the model receives new variations of images at each epoch. 
+The data is concatenated as a data frame. Additionally, training data set is split into validation data and training data with a training size of 0.3 with shuffling before splitting. Training size of 0.3 means that 30% of the training data is split into validation data. Validation data will be used to give an estimate of the model's skill while tuning model's hyperparameters. Then, the ImageDataGenerator is used to ensure that the model receives new variations of images at each epoch. 
 ```
 # data concatenation as data frame
 def concatenateDataAsDF(image_files, image_file_labels):
+  # Fseries is the file names/paths made as a 'filepaths' Series 
   Fseries = pd.Series(image_files , name = 'filepaths')
+
+  # Lseries is the image labels made as a 'label' Series
   Lseries = pd.Series(image_file_labels , name = 'label')
+
   return pd.concat([Fseries , Lseries] , axis = 1)
 
 # concatenate training data as data frame
@@ -202,10 +213,13 @@ batch_size = 4 # ImageDataGenerator produces 4 images each iteration of training
 tr_gen = ImageDataGenerator()
 ts_gen= ImageDataGenerator()
 
+# training data set
 train_gen = tr_gen.flow_from_dataframe(train_data , x_col = 'filepaths' , y_col = 'label' , target_size = img_size , class_mode = 'categorical' , color_mode = 'grayscale' , shuffle = True , batch_size =batch_size)
 
+# validation data set
 valid_gen = tr_gen.flow_from_dataframe(valid_data , x_col = 'filepaths' , y_col = 'label' , target_size = img_size , class_mode = 'categorical',color_mode = 'grayscale' , shuffle= True, batch_size = batch_size)
 
+# testing data set
 test_gen = ts_gen.flow_from_dataframe(test_df , x_col= 'filepaths' , y_col = 'label' , target_size = img_size , class_mode = 'categorical' , color_mode= 'grayscale' , shuffle = False , batch_size = batch_size)
 ```
 
@@ -226,7 +240,7 @@ A convolutional layer has many different parameter inputs:
 Another relevant term is epoch, which is the number of times the learning algorithm will work through the entire training dataset. In this model, callbacks is used during the model fitting process to save the model of the epoch with the best validation data recall value.
 
 ### Creating Model
-Create the convolutional neural network model by adding different layers. 
+Create the convolutional neural network model by adding different layers. The default architecture is Con2D layer with filter=16 and max pooling layer, another Conv2D layer with filter=32 and max pooling layer, and a last Conv2D layer with filter=64 and max pooling layer. And these layers are flattened and connected through Dense layers. 
 ```
 # create the convolutional neural network model
 def createModel(filters=[16,32,64]):
@@ -261,6 +275,8 @@ def createModel(filters=[16,32,64]):
 When compiling the model, the metrices Recall is used. Recall metrics focuses on capturing as many true positives and are usually used when the false negatives are costly. In this case, true positives are the result of the model predicting the existence of brain tumor when the patient actually has brain tumor, while false negatives are prediction that there is no brain tumor when the patient actually has brain tumor. The false negatives, in this scenario, are costly because predicting that the patient does not have tumor when they actuall do lets the tumor go unnoticed and untreated. Hence, we want to maximize the Recall value. 
 
 Another hyperparaeter used consistently for all the models is the loss function. The loss function 'categorial crossentropy' is used. 
+
+Additionally, ModelCheckpoint is used as a callback. This callback allows us to save the model of the epoch with the highest validation recall value (the best performing model) and test that model on the testing data. 
 ```
 # compile CNN model
 def compileModel(model, filepath, optimizer=Adam(learning_rate=0.001), loss='categorical_crossentropy', metrics=[keras.metrics.Recall()], shuffle=False):
@@ -279,7 +295,9 @@ To analyze the results and evaluate the performance of the model, the model of t
 ```
 # test model of best epoch on testing data
 def testModel(filepath, test_data=test_gen):
+  # bestModel is the model of the epoch with the highest validation recall values
   bestModel = keras.models.load_model(filepath)
+  # generate predictions with the model on the testing data
   pred = bestModel.predict(test_data)
   y_pred = np.argmax(pred, axis=1)
   return y_pred
@@ -366,7 +384,7 @@ def plotAllGraphs(conf_matrices, recall_graphs, filepath=filepath):
       plt.imshow(mpimg.imread(filepath+recall_graphs[i//2]+'.png'))
 ```
 ---
-## Types of Hyperparameters Used
+## Testing Different Hyperparameters
 The functions above are used to create and compile the model, test the model on the testing data, evalute the performance of the model. 
 ```
 # CREATE AND COMPILE MODEL
@@ -413,17 +431,17 @@ Grid search is used to find the optimal hyperparameters that create the model wi
 ## Model Results and Comparison
 The validation data recall values for each cohort are as follows: 
 
-<img width="564" alt="Screen Shot 2023-10-31 at 12 07 10 AM" src="https://github.com/jlee92603/BrainTumor_CNN_Model/assets/70551445/547e6eaa-9767-44fd-bf89-232e85b0aa44">
+<img width="700" alt="Screen Shot 2023-10-31 at 12 07 10 AM" src="https://github.com/jlee92603/BrainTumor_CNN_Model/assets/70551445/547e6eaa-9767-44fd-bf89-232e85b0aa44">
 
 The Loss/Recall Graphs and Confusion Matrices for each cohort are as follows: 
 
-<img width="587" alt="Screen Shot 2023-10-31 at 12 13 09 AM" src="https://github.com/jlee92603/BrainTumor_CNN_Model/assets/70551445/a2d7c548-6ccb-4a3b-ab9d-ffd7f33ed9eb">
-<img width="587" alt="Screen Shot 2023-10-31 at 12 12 57 AM" src="https://github.com/jlee92603/BrainTumor_CNN_Model/assets/70551445/e1854220-e6d5-4653-ba90-dfd0b9fc2c96">
-<img width="587" alt="Screen Shot 2023-10-31 at 12 13 24 AM" src="https://github.com/jlee92603/BrainTumor_CNN_Model/assets/70551445/20cc783d-fdad-4f5c-bf0e-7089fe672a1d">
-<img width="587" alt="Screen Shot 2023-10-31 at 12 13 39 AM" src="https://github.com/jlee92603/BrainTumor_CNN_Model/assets/70551445/0d0feb60-913b-48e5-adf1-f3952ef9b70c">
-<img width="587" alt="Screen Shot 2023-10-31 at 12 13 48 AM" src="https://github.com/jlee92603/BrainTumor_CNN_Model/assets/70551445/2af5eadd-e5dd-4434-8924-f68cb4f608d0">
-<img width="587" alt="Screen Shot 2023-10-31 at 12 13 57 AM" src="https://github.com/jlee92603/BrainTumor_CNN_Model/assets/70551445/62e3519d-d616-44b9-9817-d0b6b52f50e4">
-<img width="587" alt="Screen Shot 2023-10-31 at 12 14 10 AM" src="https://github.com/jlee92603/BrainTumor_CNN_Model/assets/70551445/b1fafdf3-70a4-43fa-8e4f-53a149cfb070">
+<img width="900" alt="Screen Shot 2023-10-31 at 12 13 09 AM" src="https://github.com/jlee92603/BrainTumor_CNN_Model/assets/70551445/a2d7c548-6ccb-4a3b-ab9d-ffd7f33ed9eb">
+<img width="900" alt="Screen Shot 2023-10-31 at 12 12 57 AM" src="https://github.com/jlee92603/BrainTumor_CNN_Model/assets/70551445/e1854220-e6d5-4653-ba90-dfd0b9fc2c96">
+<img width="900" alt="Screen Shot 2023-10-31 at 12 13 24 AM" src="https://github.com/jlee92603/BrainTumor_CNN_Model/assets/70551445/20cc783d-fdad-4f5c-bf0e-7089fe672a1d">
+<img width="900" alt="Screen Shot 2023-10-31 at 12 13 39 AM" src="https://github.com/jlee92603/BrainTumor_CNN_Model/assets/70551445/0d0feb60-913b-48e5-adf1-f3952ef9b70c">
+<img width="900" alt="Screen Shot 2023-10-31 at 12 13 48 AM" src="https://github.com/jlee92603/BrainTumor_CNN_Model/assets/70551445/2af5eadd-e5dd-4434-8924-f68cb4f608d0">
+<img width="900" alt="Screen Shot 2023-10-31 at 12 13 57 AM" src="https://github.com/jlee92603/BrainTumor_CNN_Model/assets/70551445/62e3519d-d616-44b9-9817-d0b6b52f50e4">
+<img width="900" alt="Screen Shot 2023-10-31 at 12 14 10 AM" src="https://github.com/jlee92603/BrainTumor_CNN_Model/assets/70551445/b1fafdf3-70a4-43fa-8e4f-53a149cfb070">
 
 ## Conclusion
 Excluding the EfficientNetB3 model architecture that performed significantly better than the other models, Cohorts C, H, K, and O performed well with the best validation recall value greater than 0.94. These models used either the Adam or Adamax optimizers and had slower learning rates. 
